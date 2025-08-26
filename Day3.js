@@ -69,6 +69,18 @@ const chai1 = () => {
    // => console.log(this) // here it retunrs empty parenthesis  
 }
 
-const addTwo1 = (num1 , num2) => (num1+num2)  // now there is no need to use return and curly braces
+const addTwo1 = (num1 , num2) => (num1 + num2)  // now there is no need to use return and curly braces
 
-addTwo1(5,6)
+console.log(addTwo1(5,6)); // 11
+
+
+// Imediately Invoked Function Expressions (IIFE)
+
+(function doodhpati(){ // this syntax is correct but it is giving error because no (;) is used before this 
+    console.log("Sub chale ga");
+})(); // => this is name IIFE
+
+( (name) => {
+    console.log(`${name} is name`);
+    
+})("Uzair") // => this is UnNamed IIFE
