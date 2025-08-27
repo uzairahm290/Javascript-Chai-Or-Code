@@ -71,3 +71,95 @@ console.log(val1);
 
 const iceTeaPrice = 100
 iceTeaPrice <= 70 ? console.log("less than 70") : console.log("more than 70")
+
+
+// break and continue
+
+// for (let index = 1; index <= 20; index++) {
+//     if (index == 5) {
+//         console.log(`Detected 5`);
+//         break
+//     }
+//    console.log(`Value of i is ${index}`);
+    
+// }
+
+// for (let index = 1; index <= 10; index++) {
+//     if (index == 5) {
+//         console.log(`Detected 5`);
+//         continue
+//     }
+//    console.log(`Value of i is ${index}`);
+    
+// }
+
+const arr = ["Hello" , "World"]
+
+for (const num of arr) {
+    console.log(num);
+}
+
+// Maps => there are not iterative we cannot use for-in on Map
+
+const map =  new Map()
+map.set('PK' , 'Pakistan' )
+map.set('IN' , 'India' )
+map.set('EN' , 'England' )
+
+console.log(map);
+
+for (const [key , value] of map) {
+    console.log(key, ":-" , value);
+}
+
+const myObject = {
+    game1: 'NFS',
+    game2: 'Spiderman'
+}
+
+// for (const [key, value] of myObject) {
+//     console.log(key, ':-', value);  
+    
+// } => this will not work
+
+// when we for-in loop with arrays it prints key values while in for-of it will print values
+
+const coding = ["js", "ruby", "java", "python", "cpp"]
+
+// coding.forEach( function (val){
+//     console.log(val);
+// } )
+
+// coding.forEach( (item) => {
+//     console.log(item);
+// } )
+
+// function printMe(item){
+//     console.log(item);
+// }
+
+// coding.forEach(printMe)
+
+// coding.forEach( (item, index, arr)=> {
+//     console.log(item, index, arr);
+// } )
+
+const myCoding = [
+    {
+        languageName: "javascript",
+        languageFileName: "js"
+    },
+    {
+        languageName: "java",
+        languageFileName: "java"
+    },
+    {
+        languageName: "python",
+        languageFileName: "py"
+    },
+]
+
+myCoding.forEach( (item) => {
+    
+    console.log(item.languageName);
+} )
