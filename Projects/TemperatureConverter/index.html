@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+            display: none;
+        }
+        .normal { background-color: #d4edda; color: #155724; }
+        .underweight { background-color: #cce7ff; color: #004085; }
+        .overweight { background-color: #fff3cd; color: #856404; }
+        .obese { background-color: #f8d7da; color: #721c24; }
+        .unit-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .unit-btn {
+            flex: 1;
+            padding: 8px;
+            border: 2px solid #007bff;
+            background: white;
+            color: #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .unit-btn.active {
+            background: #007bff;
+            color: white;
+        }
+        .unit-btn:hover {
+            background: #0056b3;
+            color: white;
+            border-color: #0056b3;
+        }
+        .converter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .temp-box {
+            text-align: center;
+        }
+        .temp-display {
+            font-size: 2em;
+            font-weight: bold;
+            color: #007bff;
+            margin: 10px 0;
+        }
+        .swap-btn {
+            width: auto;
+            padding: 8px 16px;
+            margin: 10px auto;
+            display: block;
+            background: #28a745;
+        }
+        .swap-btn:hover {
+            background: #1e7e34;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Temperature Converter</h1>
+        
+        <div class="form-group">
+            <label for="temperature">Enter Temperature:</label>
+            <input type="number" id="temperature" placeholder="Enter temperature value" step="0.1">
+        </div>
+        
+        <div class="unit-selector">
+            <button class="unit-btn active" data-unit="celsius">Celsius (°C)</button>
+            <button class="unit-btn" data-unit="fahrenheit">Fahrenheit (°F)</button>
+            <button class="unit-btn" data-unit="kelvin">Kelvin (K)</button>
+        </div>
+        
+        <button class="swap-btn" id="convert">Convert</button>
+        
+        <div class="converter-grid">
+            <div class="temp-box">
+                <h3>Celsius</h3>
+                <div class="temp-display" id="celsius-result">0°C</div>
+            </div>
+            <div class="temp-box">
+                <h3>Fahrenheit</h3>
+                <div class="temp-display" id="fahrenheit-result">32°F</div>
+            </div>
+            <div class="temp-box">
+                <h3>Kelvin</h3>
+                <div class="temp-display" id="kelvin-result">273.15K</div>
+            </div>
+            <div class="temp-box">
+                <h3>Rankine</h3>
+                <div class="temp-display" id="rankine-result">491.67°R</div>
+            </div>
+        </div>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const temperatureInput = document.querySelector('#temperature');
+        const convertBtn = document.querySelector('#convert');
+        const unitButtons = document.querySelectorAll('.unit-btn');
+        const resultDiv = document.querySelector('#result');
+        
+        // Result display elements
+        const celsiusResult = document.querySelector('#celsius-result');
+        const fahrenheitResult = document.querySelector('#fahrenheit-result');
+        const kelvinResult = document.querySelector('#kelvin-result');
+        const rankineResult = document.querySelector('#rankine-result');
+        
+        let selectedUnit = 'celsius';
+
+        // Unit selection
+        unitButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                unitButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedUnit = btn.dataset.unit;
+                convertTemperature();
+            });
+        });
+
+        convertBtn.addEventListener('click', convertTemperature);
+        temperatureInput.addEventListener('input', convertTemperature);
+
+        function convertTemperature() {
+            const inputTemp = parseFloat(temperatureInput.value);
+            
+            if (isNaN(inputTemp)) {
+                resetDisplay();
+                return;
+            }
+
+            let celsius, fahrenheit, kelvin, rankine;
+
+            // Convert input to Celsius first
+            switch (selectedUnit) {
+                case 'celsius':
+                    celsius = inputTemp;
+                    break;
+                case 'fahrenheit':
+                    celsius = (inputTemp - 32) * 5/9;
+                    break;
+                case 'kelvin':
+                    celsius = inputTemp - 273.15;
+                    break;
+            }
+
+            // Convert from Celsius to other units
+            fahrenheit = (celsius * 9/5) + 32;
+            kelvin = celsius + 273.15;
+            rankine = (celsius + 273.15) * 9/5;
+
+            // Update display
+            celsiusResult.textContent = `${celsius.toFixed(2)}°C`;
+            fahrenheitResult.textContent = `${fahrenheit.toFixed(2)}°F`;
+            kelvinResult.textContent = `${kelvin.toFixed(2)}K`;
+            rankineResult.textContent = `${rankine.toFixed(2)}°R`;
+
+            // Show interesting facts
+            showTemperatureFacts(celsius);
+        }
+
+        function resetDisplay() {
+            celsiusResult.textContent = '0°C';
+            fahrenheitResult.textContent = '32°F';
+            kelvinResult.textContent = '273.15K';
+            rankineResult.textContent = '491.67°R';
+            resultDiv.style.display = 'none';
+        }
+
+        function showTemperatureFacts(celsius) {
+            let message = '';
+            let className = 'normal';
+
+            if (celsius <= -273.15) {
+                message = 'This is absolute zero - the coldest possible temperature!';
+                className = 'underweight';
+            } else if (celsius < -40) {
+                message = 'Extremely cold! This is colder than Antarctica.';
+                className = 'underweight';
+            } else if (celsius < 0) {
+                message = 'Below freezing point of water.';
+                className = 'underweight';
+            } else if (celsius === 0) {
+                message = 'Water freezing/melting point.';
+                className = 'normal';
+            } else if (celsius < 100) {
+                message = 'Normal temperature range.';
+                className = 'normal';
+            } else if (celsius === 100) {
+                message = 'Water boiling point at sea level.';
+                className = 'overweight';
+            } else if (celsius < 1000) {
+                message = 'Very hot! This could melt many metals.';
+                className = 'overweight';
+            } else {
+                message = 'Extremely hot! Hotter than most furnaces.';
+                className = 'obese';
+            }
+
+            showResult(message, className);
+        }
+
+        function showResult(message, className) {
+            resultDiv.textContent = message;
+            resultDiv.className = className;
+            resultDiv.style.display = 'block';
+        }
+
+        // Allow Enter key to convert
+        temperatureInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') convertTemperature();
+        });
+
+        // Initialize with default values
+        convertTemperature();
+    </script>
+</body>
+</html>
