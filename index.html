@@ -5,9 +5,30 @@
     <title>DOM</title>
 </head>
 <body>
+    <div class="parent">
+        <div class="day">Monday</div>      
+        <div class="day">Tuesday</div>      
+        <div class="day">Wednesday</div>      
+        <div class="day">Thursday</div>      
+    </div>
     <div id="title" class="bg-black">
         <h1 class="heading">Welcome to DOM</h1>
         <p>Hello, How are you? Today is our 5th day of Learning JS </p>
     </div>
 </body>
+<script>
+    const parent = document.querySelector('.parent')
+    console.log(parent);
+    console.log(parent.children);
+    console.log(parent.children[1].innerHTML);
+    parent.children[1].style.color = "orange"
+    console.log(parent.firstElementChild);
+    
+    const DayOne = document.querySelector('.day')
+    console.log(DayOne);
+    console.log(DayOne.parentElement);
+
+    console.log("Nodes : " , parent.childNodes);
+    // Spaces are count as one
+</script>
 </html>
