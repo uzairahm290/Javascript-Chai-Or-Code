@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>htnml Events </title>
+</head>
+<body style="background-color: #414141; color: aliceblue;">
+    <h2>Amazing image</h2>
+    <div >
+        <ul id="images">
+            <li><img width="200px" id="photoshop" src="https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="photoshop"></li>
+            <li><img width="200px" id="japan" src="https://images.pexels.com/photos/3532553/pexels-photo-3532553.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="river" src="https://images.pexels.com/photos/3532551/pexels-photo-3532551.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="owl" src="https://images.pexels.com/photos/3532552/pexels-photo-3532552.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="" ></li>
+            <li><img width="200px" id="prayer" src="https://images.pexels.com/photos/2522671/pexels-photo-2522671.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><a style="color: aliceblue;" href="https://google.com" id="google">Google</a></li>
+        </ul>
+   </div>
+</body>
+<script>
+    // document.getElementById('owl').onclick = function(){
+    //     alert("owl clicked")
+    // }
+
+    /*
+    Event Object Properties Documentation:
+
+    type: String indicating the type of event that occurred (e.g., 'click', 'keydown', 'mouseover')
+    timestamp: Number representing the time when the event was created (in milliseconds since epoch)
+    defaultPrevented: Boolean indicating whether preventDefault() has been called on the event
+
+    target: The element that triggered the event (the actual element clicked/interacted with)
+    toElement: The element the mouse is moving to (legacy IE property, now deprecated)
+    srcElement: Legacy IE equivalent of target property (deprecated, use target instead)
+    currentTarget: The element to which the event handler is attached (may differ from target due to event bubbling)
+
+    clientX: Horizontal coordinate of the mouse pointer relative to the viewport
+    clientY: Vertical coordinate of the mouse pointer relative to the viewport
+    screenX: Horizontal coordinate of the mouse pointer relative to the screen
+    screenY: Vertical coordinate of the mouse pointer relative to the screen
+
+    altkey: Boolean indicating whether the Alt key was pressed when the event occurred
+    ctrlkey: Boolean indicating whether the Ctrl key was pressed when the event occurred
+    shiftkey: Boolean indicating whether the Shift key was pressed when the event occurred
+    keyCode: Numeric code representing the key that was pressed (deprecated, use 'key' or 'code' instead)
+    */
+
+    // attachEvent()
+    // jQuery - on
+
+    // type, timestamp, defaultPrevented
+    // target, toElement, srcElement, currentTarget,
+    // clientX, clientY, screenX, screenY
+    // altkey, ctrlkey, shiftkey, keyCode
+
+    // document.getElementById('images').addEventListener('click', function(e){
+    //     console.log("clicked inside the ul");
+    // }, false)
+
+    // document.getElementById('owl').addEventListener('click', function(e){
+    //     console.log("owl clicked");
+    //     e.stopPropagation()
+    // }, false)
+    
+    // document.getElementById('google').addEventListener('click',function(e){
+    //     e.preventDefault();  // stops the page from refereshing  , stops navigation 
+    //     e.stopPropagation() // stops event bubbling up the DOM tree
+    //     console.log("google clicked");
+    // }, false)
+   
+    
+    document.querySelector('#images').addEventListener('click', function(e){
+        console.log(e.target.tagName);
+        if (e.target.tagName === 'IMG') {
+            console.log(e.target.id);
+            let removeIt = e.target.parentNode
+            removeIt.remove()
+        }
+    
+        
+    })
+    
+    //removeIt.parentNode.removeChild(removeIt)
+</script>
+</html>
